@@ -481,24 +481,26 @@
            XCTAssertEqual(numberOfMarkets, 2);
 
            NSError *marketsFetchError = nil;
-           //marketsRequest.predicate = [NSPredicate predicateWithFormat:@"uniqueId = %@", @"1"];
+           marketsRequest.predicate = [NSPredicate predicateWithFormat:@"uniqueId = %@", @"1"];
            NSArray *markets = [mainContext executeFetchRequest:marketsRequest error:&marketsFetchError];
            if (marketsFetchError) NSLog(@"marketsFetchError: %@", marketsFetchError);
            NSManagedObject *market = [markets firstObject];
-           XCTAssertEqual([[[market valueForKey:@"items"] allObjects] count], 2);
+           XCTAssertEqualObjects([market valueForKey:@"otherAttribute"], @"Market 1");
+           XCTAssertEqual([[[market valueForKey:@"items"] allObjects] count], 1);
 
            NSError *itemsError = nil;
            NSFetchRequest *itemsRequest = [[NSFetchRequest alloc] initWithEntityName:@"Item"];
            NSInteger numberOfItems = [mainContext countForFetchRequest:itemsRequest error:&itemsError];
            if (itemsError) NSLog(@"itemsError: %@", itemsError);
-           XCTAssertEqual(numberOfItems, 2);
+           XCTAssertEqual(numberOfItems, 1);
 
            NSError *itemsFetchError = nil;
            itemsRequest.predicate = [NSPredicate predicateWithFormat:@"uniqueId = %@", @"1"];
-           NSArray *tags = [mainContext executeFetchRequest:itemsRequest error:&itemsFetchError];
+           NSArray *items = [mainContext executeFetchRequest:itemsRequest error:&itemsFetchError];
            if (itemsFetchError) NSLog(@"itemsFetchError: %@", itemsFetchError);
-           NSManagedObject *tag = [tags firstObject];
-           XCTAssertEqual([[[tag valueForKey:@"markets"] allObjects] count], 4);
+           NSManagedObject *item = [items firstObject];
+           XCTAssertEqualObjects([item valueForKey:@"otherAttribute"], @"Item 1");
+           XCTAssertEqual([[[item valueForKey:@"markets"] allObjects] count], 4);
        }];
 }
 

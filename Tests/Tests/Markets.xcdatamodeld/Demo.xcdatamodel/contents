@@ -21,7 +21,7 @@
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="markets" inverseEntity="Item" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="88"/>
         <element name="Market" positionX="196" positionY="-9" width="128" height="90"/>
     </elements>
 </model>
